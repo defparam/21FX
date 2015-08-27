@@ -37,12 +37,13 @@
 
 
 module snes_hook (
-	input       clk,
-	input       rst_n,
-	input [7:0] addr,
-	inout [7:0] data,
-	input       PARD_n,
-	input       PAWR_n
+	input            clk,
+	input            rst_n,
+	input [7:0]      addr,
+	inout [7:0]      data,
+	input            PARD_n,
+	input            PAWR_n,
+	output [2:0]     debug
 );
 
     reg [7:0] rom [0:123];
@@ -136,13 +137,15 @@ module snes_hook (
 		if (rst_high_enable && (addr == 8'hFD)) data_out = 8'h21;
 		
 		if (addr[7] && |addr[6:2] && ~PARD_n) begin // If there is a read to addr $2184-$21FF, return contents addressed in ROM 
-			data_out = rom[addr-8'h84];
-			data_enable = 1;
+			if (~PARD_n) begin
+				data_out = rom[addr-8'h84];
+				data_enable = 1;
+			end
 		end
 
 	end
-		
 
 	assign data = (rst_low_enable | rst_high_enable | data_enable) ? data_out : 8'hZZ; // Bi-directional databus assignments
-
+	assign debug = 3'bzzz;
+	
 endmodule
