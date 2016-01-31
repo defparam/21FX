@@ -1,0 +1,153 @@
+// SNES-Hook - A tiny 5V CPLD device to hijack reset on the SNES console
+//
+// Copyright (C) 2015 Evan Custodio
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+//
+////////////////////////////////////////////////////////////////////////////
+//
+// Project Name: SNES-Hook
+// Author: Evan Custodio (@defparam)
+//
+// Module Name: bootcode.hex (RAW 65c816 hex instructions)
+//
+// Description: This is the bootloader instruction code to be loaded into the CPLD bootrom
+// and to represent instructions which live at $2184 to $21FF. There should always be 124 bytes
+// of code descibed in this file.
+
+
+18 // This code graciously supplied by byuu paints the screen blue and stops the processor,
+FB // we will keep this as the default hook until the primary bootloader code is developed
+A2
+00
+9E
+00
+21
+9E
+00
+21
+E8
+E0
+40
+90
+F5
+9C
+21
+21
+9C
+22
+21
+A9
+7C
+8D
+22
+21
+A9
+0F
+8D
+00
+21
+DB 
+EA // nop slide (unreachable)
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+EA
+6C // $21FD:  Indirect JMP to reset
+FC
+FF
