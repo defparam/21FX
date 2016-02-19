@@ -37,18 +37,24 @@
 
 
 module snes_hook (
-	input            clk,
-	input            rst_n,
-	input [7:0]      addr,
-	inout [7:0]      data,
-	input            PARD_n,
-	input            PAWR_n,
-	//output [2:0]     debug,
+	input                clk,
+	input                rst_n,
+	input [7:0]          addr,
+	inout [7:0]          data,
+	input                PARD_n,
+	input                PAWR_n,
+	input                USB_RXFn,
+	input                USB_TXEn,
+	output reg           USB_RDn,
+	output reg           USB_WRn,
+	output reg           USB_DIR,
+	output reg           USB_OEn,
 	output reg [3:0]     glitch_force
 );
 
+
     reg [7:0] rom [0:123];
-	initial $readmemh("bootcode.hex",rom); // define ROM with instructions from bootcode.hex
+	initial $readmemh("bootcode2.hex",rom); // define ROM with instructions from bootcode.hex
 	
 	parameter ST_SEARCH_FOR_RST_START = 2'b00;
 	parameter ST_SEARCH_FOR_RST_HIGH  = 2'b10;
@@ -65,10 +71,7 @@ module snes_hook (
 	snes_bus_sync bus_sync (
 		.clk(clk),                    // clock (40 MHz and reset)
 		.rst_n(rst_n),
-		.D(data),                     // RAW SNES data bus
 		.PA(addr),                    // RAW SNES addr bus
-		.D_sync(),                    // Safely synchronized SNES data bus
-		.PA_sync(),                   // Safely synchronized SNES addr bus
 		.event_latch(bus_latch)       // Bus change event (detects changes in PA)
 	);
 
@@ -133,6 +136,10 @@ module snes_hook (
 	reg high_access;
 	
 	always @(*) begin
+		USB_RDn = 1;
+		USB_OEn = 1;
+		USB_DIR = 0;
+		USB_WRn = 1;
 		data_out = 0;
 		data_enable = 0;
 		low_access = 0;
@@ -150,12 +157,19 @@ module snes_hook (
 			glitch_force[3] = 1'b1;
 			glitch_force[0] = 1'b1;
 		end
-		
-		if (addr[7] && |addr[6:2] && ~PARD_n) begin // If there is a read to addr $2184-$21FF, return contents addressed in ROM 
-			if (~PARD_n) begin
-				data_out = rom[addr-8'h84];
-				data_enable = 1;
-			end
+		if (addr == 8'hFF) begin
+			USB_RDn = (~USB_RXFn & ~PARD_n) ? 1'b0 : 1'b1;
+			USB_OEn = (~USB_RXFn & ~PARD_n) ? 1'b0 : 1'b1;
+			USB_DIR = (~USB_RXFn & ~PARD_n) ? 1'b1 : 1'b0;
+			USB_WRn = (~USB_TXEn & ~PAWR_n) ? 1'b0 : 1'b1;
+		end
+		else if (addr == 8'hFE && ~PARD_n) begin
+			data_out = {6'b0,USB_RXFn,USB_TXEn};
+			data_enable = 1;
+		end
+		else if (addr[7] && |addr[6:2] && ~PARD_n) begin // If there is a read to addr $2184-$21FF, return contents addressed in ROM 
+			data_out = rom[addr-8'h84];
+			data_enable = 1;
 		end
 
 	end

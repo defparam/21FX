@@ -42,19 +42,14 @@ module snes_bus_sync (
 	input        clk,              // clock (40 MHz and reset)
 	input        rst_n,
 	input  [7:0] PA,               // RAW SNES addr bus
-	input  [7:0] D,                // RAW SNES data bus
-	output [7:0] PA_sync,          // Safely synchronized SNES addr bus
-	output [7:0] D_sync,           // Safely synchronized SNES data bus
 	output       event_latch       // Bus change event (detects changes in PA)
 );
 
 	parameter OUT_OF_SYNC = 2'b01;
 	parameter IN_SYNC     = 2'b10;
 
-	reg [7:0] D_store;
-	reg [7:0] PA_store [0:2];
-	reg [1:0] sync_state = IN_SYNC;
-	reg [4:0] clk_count = 0;
+	reg [7:0]  PA_store [0:2];
+	reg [1:0]  sync_state = IN_SYNC;
 
 	reg bus_latch = 0;
 
@@ -64,8 +59,6 @@ module snes_bus_sync (
 			PA_store[0] <= 8'b0; // reset all regs
 			PA_store[1] <= 8'b0;
 			PA_store[2] <= 8'b0;
-			D_store     <= 8'b0;
-			clk_count   <= 5'b0;
 			bus_latch   <= 1'b0;
 			sync_state  <= IN_SYNC;
 		end
@@ -73,50 +66,29 @@ module snes_bus_sync (
 			PA_store[0] <= PA;          // These registers are used for both metastability protection
 			PA_store[1] <= PA_store[0]; // and for address bus "change" detection (3 stages)
 			PA_store[2] <= PA_store[1];
-			
-			clk_count <= clk_count + 1; // Rolling clock counter
-			
-			if (clk_count == 18) begin  // Stop the clock at 18 clocks, addr bus has gone quiet
-				bus_latch <= 0;
-				clk_count <= clk_count;
-			end
-			
 			if (sync_state == IN_SYNC) begin // IN_SYNC state means the bus has settled and events/outputs have been reported
 				// The addr bus has been pipelined for 3 stages, move into the OUT_OF_SYNC state once a change in addr is detected
 				// we also ignore this check if 5 cycles haven't gone by on the previous check
-				if (((PA != PA_store[0]) || (PA_store[1] != PA_store[0]) || (PA_store[2] != PA_store[1])) && (clk_count > 5)) begin
+				if (((PA != PA_store[0]) || (PA_store[1] != PA_store[0]) || (PA_store[2] != PA_store[1]))) begin
 					sync_state <= OUT_OF_SYNC; // go to OUT_OF_SYNC
 					bus_latch <= 0;            // initialize
-					clk_count <= 0;
 				end
 			end else if (sync_state == OUT_OF_SYNC) begin
-				clk_count <= 0;
 				bus_latch  <= 0;
 				// The addr bus has under gone a change, detect when it has settled and move back into IN_SYNC
 				if ((PA == PA_store[0]) && (PA_store[1] == PA_store[0]) && (PA_store[2] == PA_store[1])) begin
+					bus_latch <= 1;
 					sync_state <= IN_SYNC;
 				end
 			end
-			// No other state exists, but move in IN_SYNC if the state is indeterminate
-			else sync_state <= IN_SYNC;
-			
-			// According to the SNES bus timing specs, you can safely latch the data and addr 5x50meg cycles after addr change
-			// (slow bus access)
-			if (clk_count == 1) begin
-				bus_latch <= 1;
-				D_store   <= D;
-			end
-
 		end
 	end
 	
 	// Report back safe synchronized bus events and data/addr
-	assign D_sync         = D_store;
-	assign PA_sync        = PA_store[2];
 	assign event_latch    = bus_latch;
 
 endmodule
-
+// synopsys translate off
 `timescale 1ns / 100ps
 
 module snes_bus_sync_test ();
@@ -129,25 +101,37 @@ reg [7:0] D = 0;
 wire [7:0] PA_sync;
 wire [7:0] D_sync;
 wire event_latch;
+reg PARD_n = 1;
 
 snes_bus_sync bs (
 	.clk(clk),                      // clock (40 MHz and reset)
 	.rst_n(rst_n),
 	.PA(PA),                        // RAW SNES addr bus
-	.D(D),                          // RAW SNES data bus
-	.PA_sync(PA_sync),              // Safely synchronized SNES addr bus
-	.D_sync(D_sync),                // Safely synchronized SNES data bus
 	.event_latch(event_latch)       // Bus change event (detects changes in PA)
 );
 
-always #12.5 clk = ~clk;
+always #14.3 clk = ~clk;
 always #139.6 cycle_clk = ~cycle_clk;
 initial #1000 rst_n = 1;
 
-always @(posedge cycle_clk) D  = $random;
-always @(posedge cycle_clk) PA = $random;
+always @(posedge cycle_clk) begin
+	if (PARD_n) PARD_n = $random % 2;
+	else PARD_n = 1;
+	D  = $random; #2;
+	D  = $random; #2;
+	D  = $random; #2;
+	D  = $random; #2;
+	D  = $random; #2;
+end
+always @(posedge cycle_clk) begin
+	PA = $random; #2;
+	PA = $random; #2;
+	PA = $random; #2;
+	PA = $random; #2;
+	PA = $random; #2;
+end
 
 
 
 endmodule
-
+// synopsys translate on
