@@ -47,15 +47,12 @@ module snes_hook (
 	input                USB_TXEn,
 	output reg           USB_RDn,
 	output reg           USB_WRn,
-	output reg           USB_DIR,
+	input                USB_CLK,
 	output reg           USB_OEn,
+	output reg           ROM_oe_n,
+	output reg           ROM_wr_n,	
 	output reg [3:0]     glitch_force
 );
-
-
-    reg [7:0] rom [0:123];
-	initial $readmemh("bootcode2.hex",rom); // define ROM with instructions from bootcode.hex
-	
 	parameter ST_SEARCH_FOR_RST_START = 2'b00;
 	parameter ST_SEARCH_FOR_RST_HIGH  = 2'b10;
 	parameter ST_SEARCH_FOR_RST_DONE  = 2'b11;
@@ -131,50 +128,88 @@ module snes_hook (
 			endcase	
 		end 
 	end
-	
-	reg low_access;
-	reg high_access;
-	
+
 	always @(*) begin
-		USB_RDn = 1;
-		USB_OEn = 1;
-		USB_DIR = 0;
-		USB_WRn = 1;
-		data_out = 0;
-		data_enable = 0;
-		low_access = 0;
-		high_access = 0;
+		USB_OEn      = 1;
+		ROM_oe_n     = 1;
+		ROM_wr_n     = 1;
+		data_out     = 0;
+		data_enable  = 0;
 		glitch_force = 4'bZZZZ;
 		if (rst_low_enable &&  (addr == 8'hFC)) begin
-			low_access = 1;
-			data_out = 8'h84; // These lines override the vector when reset vector is detected
+			data_out        = 8'h84; //Bit 7 and Bit 2 // These lines override the vector when reset vector is detected
 			glitch_force[2] = 1'b1;
 			glitch_force[1] = 1'b1;
 		end
 		if (rst_low_enable && (addr == 8'hFD)) begin
-			high_access = 1;
-			data_out = 8'h21;
+			data_out        = 8'h21; //Bit 5 and Bit 0
 			glitch_force[3] = 1'b1;
 			glitch_force[0] = 1'b1;
 		end
-		if (addr == 8'hFF) begin
-			USB_RDn = (~USB_RXFn & ~PARD_n) ? 1'b0 : 1'b1;
-			USB_OEn = (~USB_RXFn & ~PARD_n) ? 1'b0 : 1'b1;
-			USB_DIR = (~USB_RXFn & ~PARD_n) ? 1'b1 : 1'b0;
-			USB_WRn = (~USB_TXEn & ~PAWR_n) ? 1'b0 : 1'b1;
+		if (addr == 8'hFF && ~PARD_n) begin
+			USB_OEn = 0;
 		end
-		else if (addr == 8'hFE && ~PARD_n) begin
+	   else if (addr == 8'hFE && ~PARD_n) begin
 			data_out = {6'b0,USB_RXFn,USB_TXEn};
 			data_enable = 1;
 		end
 		else if (addr[7] && |addr[6:2] && ~PARD_n) begin // If there is a read to addr $2184-$21FF, return contents addressed in ROM 
-			data_out = rom[addr-8'h84];
-			data_enable = 1;
+			ROM_oe_n = 0;
 		end
-
+	end
+	
+	reg ftdi_rd_go;
+	reg ftdi_wr_go;
+	
+	always @(posedge clk or negedge rst_n) begin
+		if (~rst_n) begin
+			ftdi_rd_go <= 1'b0;
+			ftdi_wr_go <= 1'b0;
+		end
+		else
+		if (bus_latch) begin
+			ftdi_rd_go <= 1'b0;
+			ftdi_wr_go <= 1'b0;
+			if ((addr == 8'hFF) && (~PAWR_n)) begin
+				ftdi_wr_go <= 1'b1;
+			end
+			if ((addr == 8'hFF) && (~PARD_n)) begin
+				ftdi_rd_go <= 1'b1;
+			end
+		end
+	end
+	
+	reg rd_m0,rd_m1;
+	reg wr_m0,wr_m1;
+	reg in_prog;
+	always @(posedge USB_CLK or negedge rst_n) begin
+		if (~rst_n) begin
+			rd_m0   <= 1'b0; 
+			rd_m1   <= 1'b0;
+			wr_m0   <= 1'b0; 
+			wr_m1   <= 1'b0;
+			in_prog <= 1'b0;
+			USB_RDn <= 1'b1;
+			USB_WRn <= 1'b1;
+		end else begin
+			rd_m0 <= ftdi_rd_go;
+			rd_m1 <= rd_m0;
+			wr_m0 <= ftdi_wr_go;
+			wr_m1 <= wr_m0;
+			USB_RDn <= 1'b1;
+			USB_WRn <= 1'b1;
+			if (~in_prog && rd_m1) begin
+				USB_RDn <= 1'b0;
+				in_prog <= 1'b1;
+			end	
+			if (~in_prog && wr_m1) begin
+				USB_WRn <= 1'b0;
+				in_prog <= 1'b1;
+			end
+			if (~rd_m1 && ~wr_m1) in_prog <= 1'b0;
+		end
 	end
 
 	assign data = (rst_low_enable | rst_high_enable | data_enable) ? data_out : 8'hZZ; // Bi-directional databus assignments
-	//assign debug = {low_access,high_access,~PARD_n};
 	
 endmodule

@@ -37,7 +37,7 @@
 
 
 set_global_assignment -name FAMILY MAX7000S
-set_global_assignment -name DEVICE "EPM7128SQC100-10"
+set_global_assignment -name DEVICE "EPM7064STC44-10"
 set_global_assignment -name TOP_LEVEL_ENTITY snes_hook
 set_global_assignment -name ORIGINAL_QUARTUS_VERSION "13.0 SP1"
 set_global_assignment -name PROJECT_CREATION_TIME_DATE "13:57:19  AUGUST 22, 2015"
@@ -55,3 +55,35 @@ set_global_assignment -name VERILOG_FILE ../verilog/snes_bus_sync.v
 set_global_assignment -name VERILOG_FILE ../verilog/snes_hook.v
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_location_assignment PIN_2 -to addr[7]
+set_location_assignment PIN_3 -to addr[6]
+set_location_assignment PIN_5 -to addr[5]
+set_location_assignment PIN_6 -to addr[4]
+set_location_assignment PIN_8 -to addr[3]
+set_location_assignment PIN_10 -to addr[2]
+set_location_assignment PIN_11 -to addr[1]
+set_location_assignment PIN_12 -to addr[0]
+set_location_assignment PIN_27 -to data[2]
+set_location_assignment PIN_25 -to data[1]
+set_location_assignment PIN_23 -to data[0]
+set_location_assignment PIN_34 -to data[7]
+set_location_assignment PIN_33 -to data[6]
+set_location_assignment PIN_31 -to data[5]
+set_location_assignment PIN_30 -to data[4]
+set_location_assignment PIN_28 -to data[3]
+set_location_assignment PIN_13 -to PARD_n
+set_location_assignment PIN_14 -to PAWR_n
+set_location_assignment PIN_39 -to rst_n
+set_location_assignment PIN_35 -to glitch_force[2]
+set_location_assignment PIN_22 -to glitch_force[1]
+set_location_assignment PIN_44 -to ROM_wr_n
+set_location_assignment PIN_43 -to ROM_oe_n
+set_location_assignment PIN_21 -to glitch_force[0]
+set_location_assignment PIN_20 -to glitch_force[3]
+set_location_assignment PIN_40 -to USB_CLK
+set_location_assignment PIN_37 -to clk
+set_location_assignment PIN_18 -to USB_OEn
+set_location_assignment PIN_42 -to USB_RDn
+set_location_assignment PIN_38 -to USB_RXFn
+set_location_assignment PIN_19 -to USB_TXEn
+set_location_assignment PIN_15 -to USB_WRn
