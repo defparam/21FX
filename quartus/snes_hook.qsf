@@ -80,8 +80,8 @@ set_location_assignment PIN_44 -to ROM_wr_n
 set_location_assignment PIN_43 -to ROM_oe_n
 set_location_assignment PIN_21 -to glitch_force[0]
 set_location_assignment PIN_20 -to glitch_force[3]
-set_location_assignment PIN_40 -to USB_CLK
-set_location_assignment PIN_37 -to clk
+set_location_assignment PIN_37 -to USB_CLK
+set_location_assignment PIN_40 -to clk
 set_location_assignment PIN_18 -to USB_OEn
 set_location_assignment PIN_42 -to USB_RDn
 set_location_assignment PIN_38 -to USB_RXFn

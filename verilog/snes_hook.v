@@ -51,7 +51,7 @@ module snes_hook (
 	output reg           USB_OEn,
 	output reg           ROM_oe_n,
 	output reg           ROM_wr_n,	
-	output reg [3:0]     glitch_force
+	inout reg [3:0]      glitch_force
 );
 	parameter ST_SEARCH_FOR_RST_START = 2'b00;
 	parameter ST_SEARCH_FOR_RST_HIGH  = 2'b10;
