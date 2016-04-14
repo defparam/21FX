@@ -1,4 +1,4 @@
-<center><img src="https://github.com/defparam/defparam.github.io/blob/master/public/sh1.png" style="width: 100px;"/></center>
+<center><img src="https://github.com/defparam/defparam.github.io/blob/master/public/sh1.png" width="150"/></center>
 # 21FX - An SNES Primary Bootloader (formerly SNES-Hook) 
 This project includes Altium and verilog design files for an SNES CPLD 
 expansion port to perform a simple reset hijacking and present a primary 
