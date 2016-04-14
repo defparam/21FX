@@ -47,23 +47,39 @@ module snes_hook (
 	input                USB_TXEn,
 	output reg           USB_RDn,
 	output reg           USB_WRn,
-	input                USB_CLK,
-	output reg           USB_OEn,
+	input                USB_BIT0,
+	input                USB_BIT1,
 	output reg           ROM_oe_n,
-	output reg           ROM_wr_n,	
-	inout reg [3:0]      glitch_force
+	output               ROM_wr_n,	
+	output reg [3:0]     glitch_force
 );
-	parameter ST_SEARCH_FOR_RST_START = 2'b00;
-	parameter ST_SEARCH_FOR_RST_HIGH  = 2'b10;
-	parameter ST_SEARCH_FOR_RST_DONE  = 2'b11;
-	parameter ST_RST_DONE             = 2'b01;
 
-	reg [1:0] rst_search_state;
-	reg       rst_low_enable;
-	reg       rst_high_enable;
+   
+	
+	// General Variables
 	reg       data_enable;
 	wire      bus_latch;
+	reg       bus_latch_r1;
 	reg [7:0] data_out;
+	reg [7:0] hist;
+	reg punch;
+	reg [3:0] delay_write;
+	wire usb_active;
+	
+	// State Machine Variables and Parameters
+	reg [2:0] HOOK_STATE;
+	parameter ST_INIT                 = 3'h0;
+	parameter ST_RST_FOUND            = 3'h1;
+	parameter ST_SCAN_1               = 3'h2;
+	parameter ST_SCAN_2               = 3'h3;
+	parameter ST_SCAN_3               = 3'h4;
+	parameter ST_IRQ_1                = 3'h5;
+	parameter ST_IRQ_2                = 3'h6;
+
+	// Forced Assignments
+   assign ROM_wr_n = 1;
+	assign data = (punch) ? data_out : 8'hZZ; // Bi-directional databus assignments
+	assign usb_active = (~USB_BIT0 & USB_BIT1) ? 1'b1 : 1'b0;
 	
 	snes_bus_sync bus_sync (
 		.clk(clk),                    // clock (40 MHz and reset)
@@ -82,134 +98,111 @@ module snes_hook (
 
 	always @(posedge clk or negedge rst_n) begin
 		if (~rst_n) begin // reset regs
-			rst_search_state  <= ST_SEARCH_FOR_RST_START;
-			rst_low_enable    <= 1'b0;
-			rst_high_enable   <= 1'b0;
+			HOOK_STATE   <= ST_INIT;
+			bus_latch_r1 <= 1'b0;
+			delay_write  <= 3'b111;
 		end else begin
-			rst_low_enable  <= 1'b0; // helper flags default low
-			rst_high_enable <= 1'b0;
+		   bus_latch_r1 <= bus_latch;
+			
+			delay_write[3]   <= (PARD_n && (HOOK_STATE != ST_INIT) && (HOOK_STATE != ST_RST_FOUND)) ? PAWR_n : 1'b1;
+			delay_write[2:0] <= delay_write[3:1];
 		
-			case (rst_search_state)
-				// This is the first state, SNES has been reset and we are waiting for the
-				// processor to go to the reset vector low address
-				ST_SEARCH_FOR_RST_START: begin
-					rst_low_enable <= 1'b1;
-					if ((addr == 8'hFC) && (bus_latch)) begin // address found! next wait for the high word address
-						rst_high_enable <= 1'b1;
-						rst_search_state <= ST_SEARCH_FOR_RST_HIGH; // go to the high word search state
+			if (bus_latch_r1 == 0 && bus_latch == 1) begin
+				hist <= addr;
+				case (HOOK_STATE)
+					// This is the first state, SNES has been reset and we are waiting for the
+					// processor to go to the reset vector low address
+					ST_INIT: begin
+						if (addr == 8'hFC) begin // address found! next wait for the high word address
+							if (usb_active) HOOK_STATE <= ST_RST_FOUND; // go to the high word search state
+							else HOOK_STATE <= ST_SCAN_1;
+						end
+					end				
+					ST_RST_FOUND: begin
+						if (~punch) begin
+							HOOK_STATE <= ST_SCAN_1;
+						end
+					end				
+					ST_SCAN_1: begin
+						//if (addr == (hist-1) && ~USB_RXFn && usb_active) HOOK_STATE <= ST_SCAN_2;
+						HOOK_STATE <= ST_SCAN_1; // Optimize out NMI search code
 					end
-				end
-				
-				ST_SEARCH_FOR_RST_HIGH: begin
-					rst_low_enable <= 1'b1;
-					rst_high_enable <= 1'b1;
-					if ((addr == 8'hFD) && (bus_latch)) begin // address found! next wait until the bus leave this address
-						rst_search_state <= ST_SEARCH_FOR_RST_DONE;
-					end
-				end
-				
-				ST_SEARCH_FOR_RST_DONE: begin
-					rst_low_enable <= 1'b1;
-					rst_high_enable <= 1'b1;			
-					if ((addr != 8'hFD) && (bus_latch)) begin // Reset vector is complete drop the enable flag and go to a loop state
-						rst_low_enable <= 1'b0;
-						rst_high_enable <= 1'b0;
-						rst_search_state <= ST_RST_DONE;
-					end
-				end
 					
-				ST_RST_DONE: begin // stay in a loop state until reset
-					rst_low_enable <= 1'b0;
-					rst_high_enable <= 1'b0;		
-				end
-				
-				default:
-					rst_search_state <= ST_SEARCH_FOR_RST_START;
-			endcase	
+					ST_SCAN_2: begin
+						if (addr == (hist-1)) HOOK_STATE <= ST_SCAN_3;
+						else HOOK_STATE <= ST_SCAN_1;
+					end
+					
+					ST_SCAN_3: begin
+						if (addr == (hist-1)) HOOK_STATE <= ST_IRQ_1;
+						else HOOK_STATE <= ST_SCAN_1;
+					end
+					
+					ST_IRQ_1: begin
+						HOOK_STATE <= ST_IRQ_2;
+						if (~punch) HOOK_STATE <= ST_SCAN_1;
+					end
+					
+					ST_IRQ_2: begin
+						if (~punch) HOOK_STATE <= ST_SCAN_1;
+					end
+				endcase
+			end
+
+			
 		end 
 	end
-
+	
+	
+	
 	always @(*) begin
-		USB_OEn      = 1;
-		ROM_oe_n     = 1;
-		ROM_wr_n     = 1;
-		data_out     = 0;
-		data_enable  = 0;
+		USB_RDn = 1;
+		USB_WRn = 1;
+		ROM_oe_n = 1;
+		data_out = 0;
+		punch = 0;
 		glitch_force = 4'bZZZZ;
-		if (rst_low_enable &&  (addr == 8'hFC)) begin
-			data_out        = 8'h84; //Bit 7 and Bit 2 // These lines override the vector when reset vector is detected
+		if ((HOOK_STATE == ST_INIT || HOOK_STATE == ST_RST_FOUND) && (addr == 8'hFC)) begin
+			punch = 1;
+			data_out = 8'h84; // These lines override the vector when reset vector is detected
 			glitch_force[2] = 1'b1;
-			glitch_force[1] = 1'b1;
-		end
-		if (rst_low_enable && (addr == 8'hFD)) begin
-			data_out        = 8'h21; //Bit 5 and Bit 0
-			glitch_force[3] = 1'b1;
 			glitch_force[0] = 1'b1;
 		end
-		if (addr == 8'hFF && ~PARD_n) begin
-			USB_OEn = 0;
+		if ((HOOK_STATE == ST_RST_FOUND) && (addr == 8'hFD)) begin
+		   punch = 1;
+			data_out = 8'h21;
+			glitch_force[3] = 1'b1;
+			glitch_force[1] = 1'b1;
 		end
-	   else if (addr == 8'hFE && ~PARD_n) begin
-			data_out = {6'b0,USB_RXFn,USB_TXEn};
-			data_enable = 1;
+		if ((HOOK_STATE == ST_IRQ_2 || HOOK_STATE == ST_IRQ_1) && (addr == 8'hEA)) begin
+			punch = 1;
+			data_out = 8'h84; // These lines override the vector when reset vector is detected
+			glitch_force[2] = 1'b1;
+			glitch_force[0] = 1'b1;
+		end
+		if ((HOOK_STATE == ST_IRQ_2) && (addr == 8'hEB)) begin
+			punch = 1;
+			data_out = 8'h21;
+			glitch_force[3] = 1'b1;
+			glitch_force[1] = 1'b1;
+		end
+		
+		if (addr == 8'hFE && ~PARD_n) begin
+			punch = 1;
+			if (usb_active) data_out = {~USB_RXFn,~USB_TXEn,1'b1,5'b00000};
+			else data_out = 8'b00000000;
+		end
+		else if (addr == 8'hFF && ~PARD_n) begin
+			USB_RDn = 0;
+		end
+		else if (addr == 8'hFF && ~PAWR_n) begin
+			USB_WRn = |delay_write[1:0];
 		end
 		else if (addr[7] && |addr[6:2] && ~PARD_n) begin // If there is a read to addr $2184-$21FF, return contents addressed in ROM 
 			ROM_oe_n = 0;
 		end
 	end
-	
-	reg ftdi_rd_go;
-	reg ftdi_wr_go;
-	
-	always @(posedge clk or negedge rst_n) begin
-		if (~rst_n) begin
-			ftdi_rd_go <= 1'b0;
-			ftdi_wr_go <= 1'b0;
-		end
-		else
-		if (bus_latch) begin
-			ftdi_rd_go <= 1'b0;
-			ftdi_wr_go <= 1'b0;
-			if ((addr == 8'hFF) && (~PAWR_n)) begin
-				ftdi_wr_go <= 1'b1;
-			end
-			if ((addr == 8'hFF) && (~PARD_n)) begin
-				ftdi_rd_go <= 1'b1;
-			end
-		end
-	end
-	
-	reg rd_m0,rd_m1;
-	reg wr_m0,wr_m1;
-	reg in_prog;
-	always @(posedge USB_CLK or negedge rst_n) begin
-		if (~rst_n) begin
-			rd_m0   <= 1'b0; 
-			rd_m1   <= 1'b0;
-			wr_m0   <= 1'b0; 
-			wr_m1   <= 1'b0;
-			in_prog <= 1'b0;
-			USB_RDn <= 1'b1;
-			USB_WRn <= 1'b1;
-		end else begin
-			rd_m0 <= ftdi_rd_go;
-			rd_m1 <= rd_m0;
-			wr_m0 <= ftdi_wr_go;
-			wr_m1 <= wr_m0;
-			USB_RDn <= 1'b1;
-			USB_WRn <= 1'b1;
-			if (~in_prog && rd_m1) begin
-				USB_RDn <= 1'b0;
-				in_prog <= 1'b1;
-			end	
-			if (~in_prog && wr_m1) begin
-				USB_WRn <= 1'b0;
-				in_prog <= 1'b1;
-			end
-			if (~rd_m1 && ~wr_m1) in_prog <= 1'b0;
-		end
-	end
 
-	assign data = (rst_low_enable | rst_high_enable | data_enable) ? data_out : 8'hZZ; // Bi-directional databus assignments
 	
+
 endmodule

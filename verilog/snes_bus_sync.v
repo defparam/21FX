@@ -45,11 +45,11 @@ module snes_bus_sync (
 	output       event_latch       // Bus change event (detects changes in PA)
 );
 
-	parameter OUT_OF_SYNC = 2'b01;
-	parameter IN_SYNC     = 2'b10;
+	parameter OUT_OF_SYNC = 1'b1;
+	parameter IN_SYNC     = 1'b0;
 
-	reg [7:0]  PA_store [0:2];
-	reg [1:0]  sync_state = IN_SYNC;
+	reg [7:0]  PA_store [0:1];
+	reg        sync_state = IN_SYNC;
 
 	reg bus_latch = 0;
 
@@ -58,25 +58,23 @@ module snes_bus_sync (
 		if (~rst_n) begin
 			PA_store[0] <= 8'b0; // reset all regs
 			PA_store[1] <= 8'b0;
-			PA_store[2] <= 8'b0;
 			bus_latch   <= 1'b0;
 			sync_state  <= IN_SYNC;
 		end
 		else begin
 			PA_store[0] <= PA;          // These registers are used for both metastability protection
 			PA_store[1] <= PA_store[0]; // and for address bus "change" detection (3 stages)
-			PA_store[2] <= PA_store[1];
 			if (sync_state == IN_SYNC) begin // IN_SYNC state means the bus has settled and events/outputs have been reported
 				// The addr bus has been pipelined for 3 stages, move into the OUT_OF_SYNC state once a change in addr is detected
 				// we also ignore this check if 5 cycles haven't gone by on the previous check
-				if (((PA != PA_store[0]) || (PA_store[1] != PA_store[0]) || (PA_store[2] != PA_store[1]))) begin
+				if (((PA != PA_store[0]) || (PA_store[1] != PA_store[0]))) begin
 					sync_state <= OUT_OF_SYNC; // go to OUT_OF_SYNC
 					bus_latch <= 0;            // initialize
 				end
 			end else if (sync_state == OUT_OF_SYNC) begin
 				bus_latch  <= 0;
 				// The addr bus has under gone a change, detect when it has settled and move back into IN_SYNC
-				if ((PA == PA_store[0]) && (PA_store[1] == PA_store[0]) && (PA_store[2] == PA_store[1])) begin
+				if ((PA == PA_store[0]) && (PA_store[1] == PA_store[0])) begin
 					bus_latch <= 1;
 					sync_state <= IN_SYNC;
 				end
