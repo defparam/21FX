@@ -1,0 +1,10 @@
+Added Component: Designator=U2(TI-DSE6_V)
+Added Pin To Net: NetName=GND Pin=U2-4
+Change Class Name : Old Net Name=21FX_revd_s1 New Net Name=21FX_revd
+Added Member To Class: ClassName=21FX_revd Member=Component J1 SNES_EXP_DB25
+Added Member To Class: ClassName=21FX_revd Member=Component J2 USB_Mini-B_TH
+Added Member To Class: ClassName=21FX_revd Member=Component U1 5M570ZT100C5N
+Added Member To Class: ClassName=21FX_revd Member=Component U2 TLV7111833DDSET
+Added Member To Class: ClassName=21FX_revd Member=Component X1 CTX314CT-ND
+Change Room Name: Old Name=21FX_revd_s1 New Name=21FX_revd
+Change Room Scope: Old Scope=InComponentClass('21FX_revd_s1') New Scope=InComponentClass('21FX_revd')

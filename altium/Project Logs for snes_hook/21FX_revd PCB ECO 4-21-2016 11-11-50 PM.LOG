@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=SNES_VCC Pin=U4-7
+Removed Pin From Net: NetName=D3_5V Pin=U4-17
+Removed Pin From Net: NetName=SNES_VCC Pin=U4-18
+Removed Pin From Net: NetName=D_OEN Pin=U4-25
+Removed Pin From Net: NetName=D7 Pin=U4-26
+Removed Pin From Net: NetName=D6 Pin=U4-27
+Removed Pin From Net: NetName=D5 Pin=U4-29
+Removed Pin From Net: NetName=D4 Pin=U4-30
+Removed Pin From Net: NetName=VCC3.3 Pin=U4-31
+Removed Pin From Net: NetName=D3 Pin=U4-32
+Removed Pin From Net: NetName=D1 Pin=U4-35
+Removed Pin From Net: NetName=D0 Pin=U4-36
+Removed Pin From Net: NetName=VCC3.3 Pin=U4-42
+Removed Pin From Net: NetName=VCC3.3 Pin=X1-2
+Added Pin To Net: NetName=GND Pin=U4-45
+Added Pin To Net: NetName=GND Pin=X1-2

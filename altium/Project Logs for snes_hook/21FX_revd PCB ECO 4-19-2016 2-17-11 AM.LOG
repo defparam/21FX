@@ -1,0 +1,192 @@
+Removed Pin From Net: NetName=NetU1_22 Pin=U1-22
+Removed Pin From Net: NetName=NetU1_23 Pin=U1-23
+Removed Pin From Net: NetName=NetU1_24 Pin=U1-24
+Removed Pin From Net: NetName=CLK_50 Pin=U1-69
+Removed Pin From Net: NetName=NetU1_24 Pin=U?-1
+Removed Pin From Net: NetName=GND Pin=U?-2
+Removed Pin From Net: NetName=NetU1_25 Pin=U?-3
+Removed Pin From Net: NetName=VCC Pin=U?-4
+Removed Pin From Net: NetName=NetU1_22 Pin=U?-5
+Removed Pin From Net: NetName=VCC Pin=X1-2
+Removed Member From Class: ClassName=21FX_revd_power Member=U?
+Change Component DesignItemId : Designator=U? Old DesignItemId=ALTERA_JTAG_CONN New DesignItemId=SN74LVC2T45DCTT
+Change Component Footprint: Designator=U? Old Footprint=JTAG_CONN New Footprint=SOP65P400X130-8N
+Change Component Comment : Designator=U? Old Comment=ALTERA_JTAG_CONN New Comment=SN74LVC2T45DCTT
+Change Component Designator: OldDesignator=U? NewDesignator=U4
+Change Component Designator: OldDesignator=U? NewDesignator=U5
+Change Component Designator: OldDesignator=U? NewDesignator=U6
+Added Component: Designator=C1(CAPC1608X90N)
+Added Component: Designator=C2(CAPC1608X90N)
+Added Component: Designator=C3(CAPC1608X90N)
+Added Component: Designator=C4(CAPC1608X90N)
+Added Component: Designator=C5(CAPC1608X90N)
+Added Component: Designator=C6(CAPC1608X90N)
+Added Component: Designator=C7(CAPC1608X90N)
+Added Component: Designator=C8(CAPC1608X90N)
+Added Component: Designator=C9(CAPC1608X90N)
+Added Component: Designator=C10(CAPC1608X90N)
+Added Component: Designator=C11(CAPC1608X90N)
+Added Component: Designator=C12(CAPC1608X90N)
+Added Component: Designator=C13(CAPC1608X90N)
+Added Component: Designator=C14(CAPC1608X90N)
+Added Component: Designator=C15(CAPC1608X90N)
+Added Component: Designator=C16(CAPC1608X90N)
+Added Component: Designator=C17(CAPC1608X90N)
+Added Component: Designator=C18(CAPC1608X90N)
+Added Component: Designator=C19(CAPC1608X90N)
+Added Component: Designator=FB1(FBC2012N)
+Added Component: Designator=R1(RESC1608X55N)
+Added Component: Designator=R2(RESC1608X55N)
+Added Component: Designator=R3(RESC1608X55N)
+Added Component: Designator=R4(RESC1608X55N)
+Added Component: Designator=R5(RESC1608X55N)
+Added Component: Designator=U7(JTAG_CONN)
+Added Pin To Net: NetName=GND Pin=C1-2
+Added Pin To Net: NetName=GND Pin=C2-2
+Added Pin To Net: NetName=GND Pin=C3-2
+Added Pin To Net: NetName=NetU1_23 Pin=C4-1
+Added Pin To Net: NetName=GND Pin=C4-2
+Added Pin To Net: NetName=NetU1_22 Pin=C5-1
+Added Pin To Net: NetName=GND Pin=C5-2
+Added Pin To Net: NetName=GND Pin=C6-2
+Added Pin To Net: NetName=GND Pin=C7-2
+Added Pin To Net: NetName=GND Pin=C8-2
+Added Pin To Net: NetName=NetU1_24 Pin=C9-1
+Added Pin To Net: NetName=GND Pin=C9-2
+Added Pin To Net: NetName=NetU1_22 Pin=C10-1
+Added Pin To Net: NetName=GND Pin=C10-2
+Added Pin To Net: NetName=NetU1_22 Pin=C11-1
+Added Pin To Net: NetName=GND Pin=C11-2
+Added Pin To Net: NetName=NetU1_22 Pin=C12-1
+Added Pin To Net: NetName=GND Pin=C12-2
+Added Pin To Net: NetName=NetU1_22 Pin=C13-1
+Added Pin To Net: NetName=GND Pin=C13-2
+Added Pin To Net: NetName=NetU1_22 Pin=C14-1
+Added Pin To Net: NetName=GND Pin=C14-2
+Added Pin To Net: NetName=NetU1_22 Pin=C15-1
+Added Pin To Net: NetName=GND Pin=C15-2
+Added Pin To Net: NetName=NetU1_23 Pin=C16-1
+Added Pin To Net: NetName=GND Pin=C16-2
+Added Pin To Net: NetName=NetU1_23 Pin=C17-1
+Added Pin To Net: NetName=GND Pin=C17-2
+Added Pin To Net: NetName=NetU1_23 Pin=C18-1
+Added Pin To Net: NetName=GND Pin=C18-2
+Added Pin To Net: NetName=NetU1_23 Pin=C19-1
+Added Pin To Net: NetName=GND Pin=C19-2
+Added Pin To Net: NetName=NetU1_24 Pin=J2-3
+Added Pin To Net: NetName=GND Pin=J2-5
+Added Pin To Net: NetName=GND Pin=J2-6
+Added Pin To Net: NetName=GND Pin=J2-6
+Added Pin To Net: NetName=GND Pin=J2-6
+Added Pin To Net: NetName=GND Pin=J2-6
+Added Pin To Net: NetName=NetU1_22 Pin=R1-1
+Added Pin To Net: NetName=NetU1_22 Pin=R2-1
+Added Pin To Net: NetName=GND Pin=R3-1
+Added Pin To Net: NetName=NetU1_24 Pin=R5-2
+Added Pin To Net: NetName=NetU1_22 Pin=U1-9
+Added Pin To Net: NetName=NetU1_23 Pin=U1-13
+Added Pin To Net: NetName=NetU1_22 Pin=U1-31
+Added Pin To Net: NetName=NetU1_23 Pin=U1-39
+Added Pin To Net: NetName=NetU1_22 Pin=U1-45
+Added Pin To Net: NetName=NetU1_22 Pin=U1-59
+Added Pin To Net: NetName=CLK_50 Pin=U1-62
+Added Pin To Net: NetName=NetU1_23 Pin=U1-63
+Added Pin To Net: NetName=CLK_50 Pin=U1-64
+Added Pin To Net: NetName=NetU1_22 Pin=U1-80
+Added Pin To Net: NetName=NetU1_23 Pin=U1-88
+Added Pin To Net: NetName=NetU1_22 Pin=U1-94
+Added Pin To Net: NetName=NetU1_22 Pin=U2-5
+Added Pin To Net: NetName=NetU1_23 Pin=U2-6
+Added Pin To Net: NetName=GND Pin=U3-19
+Added Pin To Net: NetName=GND Pin=U7-2
+Added Pin To Net: NetName=NetU1_25 Pin=U7-3
+Added Pin To Net: NetName=NetU1_22 Pin=U7-4
+Added Pin To Net: NetName=GND Pin=U7-10
+Added Pin To Net: NetName=GND Pin=X1-2
+Change Net Name : Old Net Name=NetU1_22 New Net Name=VCC3.3
+Change Net Name : Old Net Name=NetU1_23 New Net Name=VCC1.8
+Change Net Name : Old Net Name=NetU1_24 New Net Name=USBDP
+Change Net Name : Old Net Name=NetU?_4 New Net Name=NetU4_4
+Added Pin To Net: NetName=NetC1_1 Pin=C1-1
+Added Pin To Net: NetName=NetC1_1 Pin=FB1-1
+Added Pin To Net: NetName=NetC1_1 Pin=J2-1
+Added Net: Name=NetC1_1
+Added Pin To Net: NetName=NetR1_2 Pin=R1-2
+Added Pin To Net: NetName=NetR1_2 Pin=U1-22
+Added Pin To Net: NetName=NetR1_2 Pin=U7-5
+Added Net: Name=NetR1_2
+Added Pin To Net: NetName=NetR2_2 Pin=R2-2
+Added Pin To Net: NetName=NetR2_2 Pin=U1-23
+Added Pin To Net: NetName=NetR2_2 Pin=U7-9
+Added Net: Name=NetR2_2
+Added Pin To Net: NetName=NetR3_2 Pin=R3-2
+Added Pin To Net: NetName=NetR3_2 Pin=U1-24
+Added Pin To Net: NetName=NetR3_2 Pin=U7-1
+Added Net: Name=NetR3_2
+Added Pin To Net: NetName=NetR4_1 Pin=R4-1
+Added Pin To Net: NetName=NetR4_1 Pin=U3-14
+Added Net: Name=NetR4_1
+Added Pin To Net: NetName=NetR5_1 Pin=R5-1
+Added Pin To Net: NetName=NetR5_1 Pin=U3-13
+Added Net: Name=NetR5_1
+Added Pin To Net: NetName=RD# Pin=U1-61
+Added Pin To Net: NetName=RD# Pin=U3-11
+Added Net: Name=RD#
+Added Pin To Net: NetName=RXF# Pin=U1-68
+Added Pin To Net: NetName=RXF# Pin=U3-21
+Added Net: Name=RXF#
+Added Pin To Net: NetName=SI/WU# Pin=U1-66
+Added Pin To Net: NetName=SI/WU# Pin=U3-10
+Added Net: Name=SI/WU#
+Added Pin To Net: NetName=TXE# Pin=U1-67
+Added Pin To Net: NetName=TXE# Pin=U3-20
+Added Net: Name=TXE#
+Added Pin To Net: NetName=USB3V3 Pin=C7-1
+Added Pin To Net: NetName=USB3V3 Pin=U3-3
+Added Pin To Net: NetName=USB3V3 Pin=U3-15
+Added Pin To Net: NetName=USB3V3 Pin=U3-16
+Added Net: Name=USB3V3
+Added Pin To Net: NetName=USB5V Pin=C2-1
+Added Pin To Net: NetName=USB5V Pin=C3-1
+Added Pin To Net: NetName=USB5V Pin=C6-1
+Added Pin To Net: NetName=USB5V Pin=FB1-2
+Added Pin To Net: NetName=USB5V Pin=U2-1
+Added Pin To Net: NetName=USB5V Pin=U2-2
+Added Pin To Net: NetName=USB5V Pin=U2-3
+Added Pin To Net: NetName=USB5V Pin=U3-18
+Added Net: Name=USB5V
+Added Pin To Net: NetName=USBDM Pin=C8-1
+Added Pin To Net: NetName=USBDM Pin=J2-2
+Added Pin To Net: NetName=USBDM Pin=R4-2
+Added Net: Name=USBDM
+Added Pin To Net: NetName=WR# Pin=U1-58
+Added Pin To Net: NetName=WR# Pin=U3-12
+Added Net: Name=WR#
+Added Member To Class: ClassName=21FX_revd_power Member=Component C1 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C2 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C3 Value
+Added Member To Class: ClassName=21FX_revd_power Member=Component C4 Value
+Added Member To Class: ClassName=21FX_revd_power Member=Component C5 Value
+Added Member To Class: ClassName=21FX_revd_power Member=Component C6 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C7 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C8 Value
+Added Member To Class: ClassName=21FX_revd_power Member=Component C9 Value
+Added Member To Class: ClassName=21FX_revd_power Member=Component C10 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C11 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C12 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C13 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C14 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C15 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C16 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C17 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C18 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component C19 approved sub OK
+Added Member To Class: ClassName=21FX_revd_power Member=Component FB1 Value
+Added Member To Class: ClassName=21FX_revd_power Member=Component R1 Thick Film
+Added Member To Class: ClassName=21FX_revd_power Member=Component R2 Thick Film
+Added Member To Class: ClassName=21FX_revd_power Member=Component R3 Thick Film
+Added Member To Class: ClassName=21FX_revd_power Member=Component R4 Thick Film
+Added Member To Class: ClassName=21FX_revd_power Member=Component R5 Thick Film
+Added Member To Class: ClassName=21FX_revd Member=Component U5 SN74LVC2T45DCTT
+Added Member To Class: ClassName=21FX_revd Member=Component U6 SN74LVC2T45DCTT
+Added Member To Class: ClassName=21FX_revd_power Member=Component U7 ALTERA_JTAG_CONN

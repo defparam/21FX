@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=GND Pin=X1-4
+Added Pin To Net: NetName=PA1_5V Pin=U4-3
+Added Pin To Net: NetName=PA2_5V Pin=U4-5
+Added Pin To Net: NetName=PA3_5V Pin=U4-6
+Added Pin To Net: NetName=PA5_5V Pin=U4-9
+Added Pin To Net: NetName=PA6_5V Pin=U4-11
+Added Pin To Net: NetName=PA7_5V Pin=U4-12
+Added Pin To Net: NetName=D1_5V Pin=U4-14
+Added Pin To Net: NetName=D2_5V Pin=U4-16
+Added Pin To Net: NetName=D3_5V Pin=U4-17
+Added Pin To Net: NetName=D4_5V Pin=U4-19
+Added Pin To Net: NetName=D5_5V Pin=U4-20
+Added Pin To Net: NetName=D6_5V Pin=U4-22
+Added Pin To Net: NetName=VCC3.3 Pin=X1-4

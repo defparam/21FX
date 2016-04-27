@@ -1,0 +1,4 @@
+Added Component: Designator=U?(TSSOP48)
+Added Component: Designator=U?(SOP65P400X130-8N)
+Added Member To Class: ClassName=21FX_revd Member=Component U? SN74LVCH16T245
+Added Member To Class: ClassName=21FX_revd Member=Component U? SN74LVC2T45DCTT

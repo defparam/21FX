@@ -1,0 +1,28 @@
+CSV text has been written to file : snes_hook_parts.csv
+
+Library Component Count : 21
+
+Name                Description
+----------------------------------------------------------------------------------------------------
+
+74LVC6T245          
+ADAFRUIT_232H       
+ALTERA_JTAG_CONN    
+CAPC_100n_0603_X7R_50V_10%Capacitor SMD Cer 100nF 10% 50V X7R 0603
+CAPC_10n_0603_X7R_50V_10%Capacitor SMD Cer 10nF 10% 50V X7R 0603
+CAPC_47p_0603_X7R_50V_5%Capacitor SMD Cer 47pF 5% 50V X7R 0603
+CAPT_47u_6032_16V   Capacitor SMD Tantalum 47uF 10% 16V 6032-28
+CONN_HEADER_2x8P_0.100in_MaleHeader THD 16 POS Double-row 2.54mm pitch
+CPLD_JTAG_PADS      Pads for JTAG access
+CTX314CT-ND_40MHz   40 MHz 5v Oscillator
+EPM7064STC44-10     MAX 7000S 5V In-System Programmable CPLD, 64 Macrocells, 44-Pin TQFP, Speed Grade 10, Commercial Grade
+FERRITE_600-100MHz_0805Ferrite bead 600 Ohm at 100 MHz 1.5A 0805 SMD
+FT240X              
+RES_1K_0603_5%      Resistor SMD chip 1k Ohm 0.1W 5% 0603
+RES_27R_0603_5%     Resistor SMD chip 27 Ohm 0.1W 5% 0603
+SELECT_3PIN         
+SNESConn            
+SNES_EXP_DB25       
+SST39SF010A-DIP32   
+SST39SF010A-PLCC32  
+USB_Mini-B_TH       Connector TH USB Type Mini-B

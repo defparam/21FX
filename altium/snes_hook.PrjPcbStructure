@@ -1,1 +1,2 @@
-Record=TopLevelDocument|FileName=snes_hook.SchDoc
+Record=TopLevelDocument|FileName=21FX_revd.SchDoc
+Record=FPGA_COMPONENT|BaseComponentDesignator=U1|DocumentName=21FX_revd.SchDoc|LibraryReference=5M570ZT100C5N|SubProjectPath= |Configuration= |Description=MAX V 1.8V CPLD, 74 IOs, 570 Logic Elements, 100-Pin TQFP, Commercial Temperature, Speed Grade 5, Pb-Free|NexusDeviceId=5M570ZT100C5N|SubPartUniqueId1=YSXSGKMH|SubPartDocPath1=21FX_revd.SchDoc|SubPartUniqueId2=MEMTASIG|SubPartDocPath2=21FX_revd.SchDoc|SubPartUniqueId3=MHREYTFM|SubPartDocPath3=21FX_revd_power.SchDoc|SubPartUniqueId4=KOBECEQF|SubPartDocPath4=21FX_revd_power.SchDoc

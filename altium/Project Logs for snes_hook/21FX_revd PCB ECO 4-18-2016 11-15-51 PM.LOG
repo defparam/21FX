@@ -1,0 +1,30 @@
+Removed Pin From Net: NetName=GND Pin=C1-2
+Removed Pin From Net: NetName=GND Pin=C2-2
+Removed Pin From Net: NetName=GND Pin=C3-2
+Removed Pin From Net: NetName=GND Pin=C4-2
+Removed Pin From Net: NetName=GND Pin=C5-2
+Removed Pin From Net: NetName=GND Pin=J1-23
+Removed Pin From Net: NetName=GND Pin=J2-2
+Removed Pin From Net: NetName=GND Pin=J2-3
+Removed Pin From Net: NetName=GND Pin=J2-4
+Removed Pin From Net: NetName=GND Pin=J2-16
+Removed Pin From Net: NetName=GND Pin=J2-22
+Removed Pin From Net: NetName=GND Pin=J2-23
+Removed Pin From Net: NetName=GND Pin=J2-25
+Removed Pin From Net: NetName=GND Pin=J2-26
+Removed Pin From Net: NetName=GND Pin=J2-27
+Removed Pin From Net: NetName=GND Pin=J2-28
+Removed Pin From Net: NetName=GND Pin=J2-29
+Removed Pin From Net: NetName=GND Pin=J3-12
+Removed Pin From Net: NetName=GND Pin=J4-2
+Removed Pin From Net: NetName=GND Pin=J4-10
+Removed Pin From Net: NetName=GND Pin=U1-4
+Removed Pin From Net: NetName=GND Pin=U1-16
+Removed Pin From Net: NetName=GND Pin=U1-24
+Removed Pin From Net: NetName=GND Pin=U1-36
+Removed Pin From Net: NetName=GND Pin=X1-2
+Change Component Designator: OldDesignator=J6 NewDesignator=J2
+Change Component Designator: OldDesignator=J9 NewDesignator=J1
+Change Component Designator: OldDesignator=U2 NewDesignator=U1
+Change Component Designator: OldDesignator=U4 NewDesignator=U3
+Change Component Designator: OldDesignator=X2 NewDesignator=X1

@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=VCC3.3 Pin=X1-2
+Added Pin To Net: NetName=D7 Pin=U4-26
+Added Pin To Net: NetName=D6 Pin=U4-27
+Added Pin To Net: NetName=D5 Pin=U4-29
+Added Pin To Net: NetName=D4 Pin=U4-30
+Added Pin To Net: NetName=D3 Pin=U4-32
+Added Pin To Net: NetName=D2 Pin=U4-33
+Added Pin To Net: NetName=D1 Pin=U4-35
+Added Pin To Net: NetName=D0 Pin=U4-36
+Added Pin To Net: NetName=GND Pin=X1-2

@@ -1,0 +1,53 @@
+Removed Pin From Net: NetName=PA1_5V Pin=U4-3
+Removed Pin From Net: NetName=PA2_5V Pin=U4-5
+Removed Pin From Net: NetName=PA3_5V Pin=U4-6
+Removed Pin From Net: NetName=SNES_VCC Pin=U4-7
+Removed Pin From Net: NetName=PA5_5V Pin=U4-9
+Removed Pin From Net: NetName=PA6_5V Pin=U4-11
+Removed Pin From Net: NetName=PA7_5V Pin=U4-12
+Removed Pin From Net: NetName=D1_5V Pin=U4-14
+Removed Pin From Net: NetName=D2_5V Pin=U4-16
+Removed Pin From Net: NetName=D3_5V Pin=U4-17
+Removed Pin From Net: NetName=SNES_VCC Pin=U4-18
+Removed Pin From Net: NetName=D4_5V Pin=U4-19
+Removed Pin From Net: NetName=D5_5V Pin=U4-20
+Removed Pin From Net: NetName=D6_5V Pin=U4-22
+Removed Pin From Net: NetName=VCC3.3 Pin=U4-31
+Removed Pin From Net: NetName=VCC3.3 Pin=U4-42
+Removed Pin From Net: NetName=GND Pin=U4-45
+Removed Pin From Net: NetName=VCC3.3 Pin=X1-2
+Added Pin To Net: NetName=D7_5V Pin=U4-23
+Added Pin To Net: NetName=D_OEN Pin=U4-25
+Added Pin To Net: NetName=D7 Pin=U4-26
+Added Pin To Net: NetName=D6 Pin=U4-27
+Added Pin To Net: NetName=D5 Pin=U4-29
+Added Pin To Net: NetName=D4 Pin=U4-30
+Added Pin To Net: NetName=D3 Pin=U4-32
+Added Pin To Net: NetName=D1 Pin=U4-35
+Added Pin To Net: NetName=D0 Pin=U4-36
+Added Pin To Net: NetName=GND Pin=X1-2
+Added Pin To Net: NetName=NetU4_4 Pin=U4-4
+Added Pin To Net: NetName=NetU4_4 Pin=U4-10
+Added Pin To Net: NetName=NetU4_4 Pin=U4-15
+Added Pin To Net: NetName=NetU4_4 Pin=U4-21
+Added Pin To Net: NetName=NetU4_4 Pin=U4-28
+Added Pin To Net: NetName=NetU4_4 Pin=U4-34
+Added Pin To Net: NetName=NetU4_4 Pin=U4-39
+Added Pin To Net: NetName=NetU4_4 Pin=U4-45
+Added Net: Name=NetU4_4
+Added Pin To Net: NetName=PA0 Pin=U4-47
+Added Net: Name=PA0
+Added Pin To Net: NetName=PA1 Pin=U4-46
+Added Net: Name=PA1
+Added Pin To Net: NetName=PA2 Pin=U4-44
+Added Net: Name=PA2
+Added Pin To Net: NetName=PA3 Pin=U4-43
+Added Net: Name=PA3
+Added Pin To Net: NetName=PA4 Pin=U4-41
+Added Net: Name=PA4
+Added Pin To Net: NetName=PA5 Pin=U4-40
+Added Net: Name=PA5
+Added Pin To Net: NetName=PA7 Pin=U4-37
+Added Net: Name=PA7
+Added Pin To Net: NetName=PA_DIR Pin=U4-1
+Added Net: Name=PA_DIR

@@ -1,0 +1,10 @@
+Removed Pin From Net: NetName=IRQ_N Pin=U5-2
+Removed Pin From Net: NetName=RST_N Pin=U5-3
+Removed Pin From Net: NetName=PAWR_N Pin=U6-2
+Removed Pin From Net: NetName=VCC3.3 Pin=X1-2
+Added Pin To Net: NetName=SNES_VCC Pin=U4-7
+Added Pin To Net: NetName=SNES_VCC Pin=U4-18
+Added Pin To Net: NetName=VCC3.3 Pin=U4-31
+Added Pin To Net: NetName=VCC3.3 Pin=U4-42
+Added Pin To Net: NetName=PARD_N_5V Pin=U6-6
+Added Pin To Net: NetName=GND Pin=X1-2
